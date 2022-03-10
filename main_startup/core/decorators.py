@@ -194,22 +194,21 @@ def add_help_menu(
             CMD_LIST[
                 file_name
             ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+    elif file_name in XTRA_CMD_LIST.keys():
+        XTRA_CMD_LIST[
+            file_name
+        ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+
     else:
-        if file_name not in XTRA_CMD_LIST.keys():
-            XTRA_CMD_LIST[file_name] = cmd_helper
-        else:
-            XTRA_CMD_LIST[
-                file_name
-            ] += f"\n\n**Command :** `{Config.COMMAND_HANDLER}{cmd}` \n**Help :** `{cmd_help}` \n**Example :** `{cmd_helpz}`"
+        XTRA_CMD_LIST[file_name] = cmd_helper
             
 
 def add_handler(filter_s, func_, cmd):
-    d_c_l = Config.DISABLED_SUDO_CMD_S
-    if d_c_l:
+    if d_c_l := Config.DISABLED_SUDO_CMD_S:
         d_c_l = d_c_l.split(" ")
         d_c_l = list(d_c_l)
         if "dev" in d_c_l:
-            d_c_l.extend(['eval', 'bash', 'install']) 
+            d_c_l.extend(['eval', 'bash', 'install'])
         if any(item in list(d_c_l) for item in list(cmd)): 
             filter_s = (filters.me & filters.command(cmd, Config.COMMAND_HANDLER) & ~filters.via_bot & ~filters.forwarded)
     Friday.add_handler(MessageHandler(func_, filters=filter_s), group=0)

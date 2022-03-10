@@ -26,7 +26,7 @@ from main_startup.helper_func.basic_helpers import edit_or_reply, get_text, prog
 )
 async def yt_vid(client, message):
     input_str = get_text(message)
-    pablo = await edit_or_reply(message, f"`Processing...`")
+    pablo = await edit_or_reply(message, "`Processing...`")
     if not input_str:
         await pablo.edit(
             "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
@@ -94,13 +94,13 @@ async def yt_vid(client, message):
 )
 async def yt_dl_(client, message):
     input_str = get_text(message)
-    pablo = await edit_or_reply(message, f"`Processing...`")
+    pablo = await edit_or_reply(message, "`Processing...`")
     if not input_str:
         await pablo.edit(
             "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
         )
         return
-    await pablo.edit(f"`Downloading Please Wait..`")
+    await pablo.edit("`Downloading Please Wait..`")
     url = input_str
     opts = {
         "format": "best",

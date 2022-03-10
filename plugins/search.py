@@ -50,11 +50,8 @@ async def grs(client, message):
         )
         return
     query = urllib.parse.quote_plus(query)
-    number_result = 8
     ua = UserAgent()
-    google_url = (
-        "https://www.google.com/search?q=" + query + "&num=" + str(number_result)
-    )
+    google_url = f"https://www.google.com/search?q={query}&num=8"
     response = requests.get(google_url, {"User-Agent": ua.random})
     soup = BeautifulSoup(response.text, "html.parser")
     result_div = soup.find_all("div", attrs={"class": "ZINbbc"})
@@ -84,8 +81,10 @@ async def grs(client, message):
     for x in to_remove:
         del titles[x]
         del descriptions[x]
-    msg = ""
+    msg = "".join(
+        f"[{tt}]({liek})\n`{d}`\n\n"
+        for tt, liek, d in zip(titles, clean_links, descriptions)
+    )
 
-    for tt, liek, d in zip(titles, clean_links, descriptions):
-        msg += f"[{tt}]({liek})\n`{d}`\n\n"
+
     await pablo.edit("**Search Query:**\n`" + query + "`\n\n**Results:**\n" + msg)
