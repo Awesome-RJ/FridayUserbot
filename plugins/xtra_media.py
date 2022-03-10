@@ -57,9 +57,8 @@ async def lgo(client, message):
         await pablo.edit("`Invalid Tgs Sticker I Suppose.`")
         os.remove("tgs.tgs")
         return
-    json = open("json.json", "r")
-    jsn = json.read()
-    json.close()
+    with open("json.json", "r") as json:
+        jsn = json.read()
     jsn = (
         jsn.replace("[1]", "[2]")
         .replace("[2]", "[3]")
@@ -68,7 +67,7 @@ async def lgo(client, message):
         .replace("[5]", "[6]")
     )
     open("json.json", "w").write(jsn)
-    await runcmd(f"lottie_convert.py json.json tgs.tgs")
+    await runcmd("lottie_convert.py json.json tgs.tgs")
     await client.send_sticker(message.chat.id, "tgs.tgs")
     os.remove("json.json")
     os.remove(lol)
@@ -110,7 +109,7 @@ async def reverseing(client, message):
         return
 
     os.remove(name)
-    match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
+    match = await ParseSauce(f'{fetchUrl}&preferences?hl=en&fg=1#languages')
     guess = match["best_guess"]
     imgspage = match["similar_images"]
 
@@ -123,7 +122,7 @@ async def reverseing(client, message):
     try:
         lim = lim[0]
         lim = lim.replace("lim=", "")
-        guess = guess.replace("lim=" + lim[0], "")
+        guess = guess.replace(f"lim={lim[0]}", "")
     except IndexError:
         lim = 5
     response = googleimagesdownload()
@@ -200,7 +199,7 @@ async def yandex_(client, message):
     except:
         await pablo.edit("Image Not Found In Yandex")
         return
-    img_search_url = searchUrl + "?" + query_string
+    img_search_url = f'{searchUrl}?{query_string}'
     caption = f"""<b>Reverse Search Conpleted!</b>
 Reverse Searched Link:- {img_search_url}
 Note:- Yandex is a Russian search engine, so better open link in chrome with auto-translate.

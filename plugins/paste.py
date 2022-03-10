@@ -25,7 +25,7 @@ async def paste(client, message):
     pablo = await edit_or_reply(message, "`Please Wait.....`")
     tex_t = get_text(message)
     message_s = tex_t
-    if not tex_t:
+    if not message_s:
         if not message.reply_to_message:
             await pablo.edit("`Reply To File / Give Me Text To Paste!`")
             return
@@ -34,7 +34,7 @@ async def paste(client, message):
             m_list = open(file, "r").read()
             message_s = m_list
             os.remove(file)
-        elif message.reply_to_message.text:
+        else:
             message_s = message.reply_to_message.text
     key = (
         requests.post("https://nekobin.com/api/documents", json={"content": message_s})
